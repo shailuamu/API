@@ -1,9 +1,7 @@
-echo "Go To Jmeter folder"
+echo "List Jmeter folder"
 
-cd /var/go/apache-jmeter-3.12/bin
-
-ls
+ls /var/go/apache-jmeter-3.12/bin
 
 echo "Run Jmeter command"
 
-./jmeter.sh -version
+/var/go/apache-jmeter-3.12/bin/jmeter.sh -nt REST_Framework.jmx -l ./Rest_Framework -eo ./Rest_Framework_Report
