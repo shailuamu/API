@@ -6,4 +6,4 @@ ls
 
 echo "Run Jmeter command"
 
-jmeter.sh -version
+./jmeter.sh -version
