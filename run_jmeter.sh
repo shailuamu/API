@@ -8,4 +8,4 @@ echo "current folder"
 
 ls
 
-/var/go/apache-jmeter-3.12/bin/jmeter.sh -nt REST_Framework.jmx -l ./Rest_Framework -eo ./Rest_Framework_Report
+/var/go/apache-jmeter-3.12/bin/jmeter.sh -nt api-automation-framework/REST_Framework.jmx -l ./Rest_Framework -eo ./Rest_Framework_Report
