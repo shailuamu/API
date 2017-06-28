@@ -4,4 +4,6 @@ cd /var/go/apache-jmeter-3.12/bin
 
 ls
 
-jmeter -version
+echo "Run Jmeter command"
+
+jmeter.sh -version
