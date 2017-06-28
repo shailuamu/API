@@ -20,5 +20,5 @@ Edit shipwreks,/api/v1/shipwrecks/${id},PUT,13.229.31.126,http,9999,utf-8,,"    
   ""longitude"":""34"",
   ""yearDiscovered"":""2007""
   }
-",,,"""name"":""api_test_edited""",Content-Type#application/json,,,200
+",,,"""name"":""api_test_edited""",Content-Type#application/json,,,300
 Delete shipwreks,/api/v1/shipwrecks/${id},DELETE,13.229.31.126,http,9999,utf-8,,,,,,,,,200
