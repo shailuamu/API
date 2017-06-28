@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="3.1" jmeter="3.1 r1770033">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="API Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1483448626000</longProp>
+        <longProp name="ThreadGroup.end_time">1483448626000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller" enabled="true">
+          <stringProp name="WhileController.condition">${__javaScript(&quot;${Api}&quot; != &quot;&lt;EOF&gt;&quot;,)}</stringProp>
+          <stringProp name="TestPlan.comments">This is to read the file row-wise till end</stringProp>
+        </WhileController>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Input File Config" enabled="true">
+            <stringProp name="filename">Api_Test_File.csv</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">true</boolProp>
+            <boolProp name="recycle">false</boolProp>
+            <boolProp name="stopThread">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <stringProp name="TestPlan.comments">This file contents all the input data required to pass along with the data to be validated</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Non Parameterized Request" enabled="true">
+            <stringProp name="IfController.condition">${__javaScript(&quot;${Parameters}&quot; == &quot;&quot;,)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <stringProp name="TestPlan.comments">This controller executes if the data to be passed as &apos;parameter&apos; is blank </stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${Apidescription}" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">${__evalVar(Bodydata)}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${ServerName}</stringProp>
+              <stringProp name="HTTPSampler.port">${PortNumber}</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="HTTPSampler.protocol">${Protocol}</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">${ContentEncoding}</stringProp>
+              <stringProp name="HTTPSampler.path">${__evalVar(Api)}</stringProp>
+              <stringProp name="HTTPSampler.method">${Method}</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <boolProp name="HTTPSampler.monitor">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="TestPlan.comments">The REST API end point under the column: &quot;Apidescription&quot; in the Api_Test_File.csv placed in the bin folder of JMeter</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="1285440303">${ExpectedStatusCode}</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_headers</stringProp>
+                <boolProp name="Assertion.assume_success">true</boolProp>
+                <intProp name="Assertion.test_type">2</intProp>
+                <stringProp name="TestPlan.comments">Validates the response code is 200 OK </stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Clear Header" enabled="true">
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters"></stringProp>
+                <boolProp name="resetInterpreter">true</boolProp>
+                <stringProp name="script">import org.apache.jmeter.protocol.http.control.Header;
+import org.apache.jmeter.protocol.http.control.HeaderManager;
+
+//To clear the header before each request
+headerMgr = sampler.getHeaderManager();
+while(headerMgr.getHeaders().iterator().hasNext()) {
+    headerName = headerMgr.getHeaders().iterator().next().getStringValue().split(&quot;\\s+&quot;)[0];
+    headerMgr.removeHeaderNamed(headerName);
+}</stringProp>
+                <stringProp name="TestPlan.comments">Clears the headers before excecution</stringProp>
+              </BeanShellPreProcessor>
+              <hashTree/>
+              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Set Header" enabled="true">
+                <boolProp name="resetInterpreter">true</boolProp>
+                <stringProp name="parameters">${Headerparmeter}</stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import org.apache.jmeter.protocol.http.control.Header;
+import org.apache.jmeter.protocol.http.control.HeaderManager;
+
+//To set the header values
+String line = Parameters;
+ if (line == null) {} else if (line.length() &gt; 0) {
+String[] input = line.split(&quot;#&quot;);
+for (int i = 0; i &lt; input.length; i++) {
+ try{	
+  int j=i;	  
+  String value= new String(input[++j]);
+  log.info(value);
+   if(value.contains(&quot;Bearer&quot;))
+  {
+   String ouathtoken=vars.get(&quot;access_token&quot;);
+   //Added by chintamani. Commented line 17 and added line 18. Space is required betweeen Bearer and token.
+   //input[j]=&quot;Bearer&quot;+ouathtoken;
+    input[j]=&quot;Bearer&quot;+&quot; &quot;+ouathtoken;
+  }	
+  if(value.contains(input[i]))
+  {
+   String testvalue=vars.get(input[i]);
+   if(testvalue!=null){
+    input[j]=testvalue;}else{}
+  }	
+ }
+	catch (Throwable ex) {
+    log.error(&quot;Error in Beanshell&quot;, ex);
+    throw ex;
+}
+Header header = new Header();
+header.setName(input[i]);
+header.setValue(input[++i]);
+HeaderManager manager = sampler.getHeaderManager(); 
+manager.add(header); 
+log.info(input[i]);  
+}
+}
+
+
+  </stringProp>
+                <stringProp name="TestPlan.comments">Sets the header during the execution</stringProp>
+              </BeanShellPreProcessor>
+              <hashTree/>
+              <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="Dynamic Assertion" enabled="true">
+                <stringProp name="TestPlan.comments">This validated the data from input file with CSV &amp; also validates the repsponce code 200 OK</stringProp>
+                <stringProp name="BeanShellAssertion.query">// Line no 1 to 9 commented due to point no.6 in &apos;Changes made&apos; doc.
+/*// Basic assertion check
+if (ResponseCode != null &amp;&amp; ResponseCode.equals (&quot;200&quot;) == false )
+{ 
+Failure=true ;
+FailureMessage =&quot;Response code was not a 200 response code it was &quot; + ResponseCode + &quot;.&quot; ;
+print ( &quot;the return code is &quot; + ResponseCode);   // this goes to stdout
+log.warn( &quot;the return code is &quot; + ResponseCode); // this goes to the JMeter log file
+} */
+//Added by chintamani, replaced else condition with if condition as I want to apply assertion on respond data also when response code is not 200
+//else {
+{
+//To perform dynamic assertions
+String line = Parameters;
+String body= new String(ResponseData);
+String assertValue=&quot;&quot;;
+String var=&quot;&quot;;
+int j=0;
+if (line == null) {} else if (line.length() &gt; 0) {
+String[] input = line.split(&quot;#&quot;);
+
+
+for (int i = 0; i &lt; input.length; i++) {
+	var=&quot;assertion&quot;+i;
+	vars.put(var,input[i]);
+	log.info(input[i]); 
+ try{
+
+ 	String[] inputTest = input[j].split(&quot;:&quot;); 
+	// Added by chintamani. 
+	// Previously, Assertion value was not taking colon (:) , as it is used for splitting.
+	// Now, In excel file, \\ should be added before : in assertion value
+	// Below code check for line ends with \\, it merge with next value, and replace \\ with colon.
+	for(int temp=0;temp&lt;inputTest.length;temp++)
+	{
+		if(inputTest[temp].endsWith(&quot;\\&quot;))
+		{
+					
+			inputTest[temp]=inputTest[temp]+inputTest[temp+1];
+			inputTest[temp].replaceAll(&quot;\\&quot;,&quot;:&quot;);	
+		}
+	}
+
+
+	
+	if(inputTest.length &gt; 1){
+	for (int i = 0; i &lt; inputTest.length-1; i++) {
+	int k=0;	
+	
+	
+	// Added by chintamani, Commented Line no.30 and added line 31. As value of  &apos;value&apos; was null, was not taking actual value. 
+    // String value=vars.get(inputTest[++k]);
+     String value=inputTest[++k];
+	log.info(value); 
+
+     // Added by chintamani, Sometimes assertion value doesn&apos;t have opening and closing quotes( &quot; ), thus removed hardcoded value.
+     //assertValue=inputTest[0]+&quot;:&quot;+&apos;&quot;&apos;+value+&apos;&quot;&apos;;
+     assertValue=inputTest[0]+&quot;:&quot;+value;
+     	
+     if(!body.contains(assertValue))
+     {
+     Failure= true ;
+     FailureMessage = &quot; Expected &quot; + assertValue;
+     System.out.println(&quot;Assertion Failed&quot; + FailureMessage);
+     log.warn(&quot;Assertion Failed&quot; + FailureMessage);
+     }
+    }
+	}
+	else{
+	if(!body.contains(input[i]))
+     {
+     Failure= true ;
+     FailureMessage = &quot; Expected &quot; + input[i];
+     System.out.println(&quot;Assertion Failed&quot; + FailureMessage);
+     log.warn(&quot;Assertion Failed&quot; + FailureMessage);
+     }
+   }
+  }catch(Exception e){
+  	
+  	}
+log.info(assertValue);
+j++;
+}
+}
+}</stringProp>
+                <stringProp name="BeanShellAssertion.filename"></stringProp>
+                <stringProp name="BeanShellAssertion.parameters">${__evalVar(AssertionVar)}</stringProp>
+                <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
+              </BeanShellAssertion>
+              <hashTree/>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+                <stringProp name="TestPlan.comments">The values under the column &quot;Headerparmeter&quot;  of the file Api_Test_File.csv are getting passed here</stringProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">${RegExVarName}</stringProp>
+              <stringProp name="RegexExtractor.regex">${RegEx}</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default">NA</stringProp>
+              <stringProp name="RegexExtractor.match_number">0</stringProp>
+              <stringProp name="Sample.scope">all</stringProp>
+              <stringProp name="TestPlan.comments">Extract the value as er the expression in the input file </stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Authorization value" enabled="true">
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters">${RegExVarName}</stringProp>
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="script">//To store token value and regular expression values
+try{	
+String line = Parameters;
+if (line == null) {} else if (line.length() &gt; 0) {
+String testvar=line+&quot;_g1&quot;;
+log.info(testvar);
+String getValue=vars.get(testvar);
+vars.put(line,getValue);
+log.info(getValue);
+	}
+}	
+  catch (Throwable ex) {
+    log.error(&quot;Error in Beanshell&quot;, ex);
+ 	
+ }
+
+
+
+
+</stringProp>
+              <stringProp name="TestPlan.comments">The auth token in the authorisation is getting extracted </stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Parameterized Request" enabled="true">
+            <stringProp name="IfController.condition">${__javaScript(&quot;${Parameters}&quot; != &quot;&quot;,)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="TestPlan.comments">This controller executes if the user needs to pass data as parameter</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${Apidescription}" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${ServerName}</stringProp>
+              <stringProp name="HTTPSampler.port">${PortNumber}</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="HTTPSampler.protocol">${Protocol}</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">${ContentEncoding}</stringProp>
+              <stringProp name="HTTPSampler.path">${__evalVar(Api)}</stringProp>
+              <stringProp name="HTTPSampler.method">${Method}</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <boolProp name="HTTPSampler.monitor">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="TestPlan.comments">The REST API end point under the column: &quot;Apidescription&quot; in the Api_Test_File.csv placed in the bin folder of JMeter</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+                <stringProp name="TestPlan.comments">The values under the column &quot;Headerparmeter&quot;  of the file Api_Test_File.csv are getting passed here</stringProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="1285440303">${ExpectedStatusCode}</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_headers</stringProp>
+                <boolProp name="Assertion.assume_success">true</boolProp>
+                <intProp name="Assertion.test_type">2</intProp>
+                <stringProp name="TestPlan.comments">Validates the response code is 200 OK</stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Clear Header" enabled="true">
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters"></stringProp>
+                <boolProp name="resetInterpreter">true</boolProp>
+                <stringProp name="script">import org.apache.jmeter.protocol.http.control.Header;
+import org.apache.jmeter.protocol.http.control.HeaderManager;
+
+//To clear the header before each request
+headerMgr = sampler.getHeaderManager();
+while(headerMgr.getHeaders().iterator().hasNext()) {
+    headerName = headerMgr.getHeaders().iterator().next().getStringValue().split(&quot;\\s+&quot;)[0];
+    headerMgr.removeHeaderNamed(headerName);
+}</stringProp>
+                <stringProp name="TestPlan.comments">Clears the headers before excecution</stringProp>
+              </BeanShellPreProcessor>
+              <hashTree/>
+              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Set Header" enabled="true">
+                <boolProp name="resetInterpreter">true</boolProp>
+                <stringProp name="parameters">${Headerparmeter}</stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import org.apache.jmeter.protocol.http.control.Header;
+import org.apache.jmeter.protocol.http.control.HeaderManager;
+
+//To set the header values
+String line = Parameters;
+ if (line == null) {} else if (line.length() &gt; 0) {
+String[] input = line.split(&quot;#&quot;);
+for (int i = 0; i &lt; input.length; i++) {
+ try{	
+  int j=i;	  
+  String value= new String(input[++j]);
+  log.info(value);
+  if(value.contains(&quot;Bearer&quot;))
+  {
+   String ouathtoken=vars.get(&quot;access_token&quot;);
+   // Added by chintamani. Commented line 17 and added line 18. Space is required betweeen Bearer and token.
+   //input[j]=&quot;Bearer&quot;+ouathtoken;
+    input[j]=&quot;Bearer&quot;+&quot; &quot;+ouathtoken;
+  }	
+  if(value.contains(input[i]))
+  {
+   String testvalue=vars.get(input[i]);
+   if(testvalue!=null){
+    input[j]=testvalue;}else{}
+  }	
+ }
+	catch (Throwable ex) {
+    log.error(&quot;Error in Beanshell&quot;, ex);
+    throw ex;
+}
+Header header = new Header();
+header.setName(input[i]);
+header.setValue(input[++i]);
+HeaderManager manager = sampler.getHeaderManager(); 
+manager.add(header); 
+log.info(input[i]);  
+}
+}
+
+
+  </stringProp>
+                <stringProp name="TestPlan.comments">Sets the header during the execution</stringProp>
+              </BeanShellPreProcessor>
+              <hashTree/>
+              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Add Parameters" enabled="true">
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters">${Parameters}</stringProp>
+                <boolProp name="resetInterpreter">true</boolProp>
+                <stringProp name="script">//To add parameters in sampler 
+String line = Parameters;
+ if (line == null) {} else if (line.length() &gt; 0) {
+String[] input = line.split(&quot;#&quot;);
+for (int i = 0; i &lt; input.length; i++) {
+try{	
+  int j=i;	  
+  String value= new String(input[++j]);
+  log.info(value);
+  if(value.contains(input[i]))
+  {
+   String testvalue=vars.get(input[i]);
+   if(testvalue!=null){
+    input[j]=testvalue;}else{}
+  }	
+ }
+	catch (Throwable ex) {
+    log.error(&quot;Error in Beanshell&quot;, ex);
+    throw ex;
+}
+	
+	sampler.addArgument(input[i], input[++i]);
+  log.info(input[i]);  
+}
+}</stringProp>
+                <stringProp name="TestPlan.comments">This adds the paramter data in the request during the excution</stringProp>
+              </BeanShellPreProcessor>
+              <hashTree/>
+              <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="Dynamic Assertion" enabled="true">
+                <stringProp name="TestPlan.comments">This validated the data from input file with CSV &amp; also validates the repsponce code 200 OK</stringProp>
+                <stringProp name="BeanShellAssertion.query">// Line no 1 to 9 commented due to point no.6 in &apos;Changes made&apos; doc.
+/*// Basic assertion check
+if (ResponseCode != null &amp;&amp; ResponseCode.equals (&quot;200&quot;) == false )
+{ 
+Failure=true ;
+FailureMessage =&quot;Response code was not a 200 response code it was &quot; + ResponseCode + &quot;.&quot; ;
+print ( &quot;the return code is &quot; + ResponseCode);   // this goes to stdout
+log.warn( &quot;the return code is &quot; + ResponseCode); // this goes to the JMeter log file
+}*/ 
+
+//Added by chintamani, removed else condition  as I want to apply assertion on respond data also when response code is not 200
+//else {
+{
+//To perform dynamic assertions
+String line = Parameters;
+String body= new String(ResponseData);
+String assertValue=&quot;&quot;;
+String var=&quot;&quot;;
+int j=0;
+if (line == null) {} else if (line.length() &gt; 0) {
+String[] input = line.split(&quot;#&quot;);
+for (int i = 0; i &lt; input.length; i++) {
+	var=&quot;assertion&quot;+i;
+	vars.put(var,input[i]);
+	log.info(input[i]); 
+	
+ try{
+	String[] inputTest = input[j].split(&quot;:&quot;); 
+
+	// Added by chintamani. 
+	// Previously, Assertion value was not taking colon (:) , as it is used for splitting.
+	// Now, In excel file, \\ should be added before : in assertion value
+	// Below code check for line ends with \\, it merge with next value, and replace \\ with colon.
+	for(int temp=0;temp&lt;inputTest.length;temp++)
+	{
+		if(inputTest[temp].endsWith(&quot;\\&quot;))
+		{
+					
+			inputTest[temp]=inputTest[temp]+inputTest[temp+1];
+			inputTest[temp].replaceAll(&quot;\\&quot;,&quot;:&quot;);	
+		}
+	}
+
+
+	
+	if(inputTest.length &gt; 1){
+	for (int i = 0; i &lt; inputTest.length-1; i++) {
+	int k=0;	
+	// Added by chintamani, Commented Line no.30 and added line 31. As value of  &apos;value&apos; was null, was not taking actual value. 
+    // String value=vars.get(inputTest[++k]);
+     String value=inputTest[++k];
+     
+     log.info(value); 
+     // Added by chintamani, Sometimes assertion value doesn&apos;t have opening and closing quotes( &quot; ), thus removed hardcoded value.
+     //assertValue=inputTest[0]+&quot;:&quot;+&apos;&quot;&apos;+value+&apos;&quot;&apos;;
+     assertValue=inputTest[0]+&quot;:&quot;+value;
+     if(!body.contains(assertValue))
+     {
+     Failure= true ;
+     FailureMessage = &quot; Expected &quot; + assertValue;
+     System.out.println(&quot;Assertion Failed&quot; + FailureMessage);
+     log.warn(&quot;Assertion Failed&quot; + FailureMessage);
+     }
+    }
+	}
+	else{
+	if(!body.contains(input[i]))
+     {
+  
+     Failure= true ;
+     FailureMessage = &quot; Expected &quot; + input[i];
+     System.out.println(&quot;Assertion Failed&quot; + FailureMessage);
+     log.warn(&quot;Assertion Failed&quot; + FailureMessage);
+     }
+   }
+  }catch(Exception e){
+  	
+  	}
+log.info(assertValue);
+j++;
+}
+}
+}</stringProp>
+                <stringProp name="BeanShellAssertion.filename"></stringProp>
+                <stringProp name="BeanShellAssertion.parameters">${__evalVar(AssertionVar)}</stringProp>
+                <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
+              </BeanShellAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">${RegExVarName}</stringProp>
+                <stringProp name="RegexExtractor.regex">${RegEx}</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default">NA</stringProp>
+                <stringProp name="RegexExtractor.match_number">0</stringProp>
+                <stringProp name="Sample.scope">all</stringProp>
+                <stringProp name="TestPlan.comments">Extract the value as er the expression in the input file </stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Authorization value" enabled="true">
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters">${RegExVarName}</stringProp>
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="script">//To store token value and regular expression values
+try{	
+String line = Parameters;
+if (line == null) {} else if (line.length() &gt; 0) {
+String testvar=line+&quot;_g1&quot;;
+log.info(testvar);
+String getValue=vars.get(testvar);
+vars.put(line,getValue);
+log.info(getValue);
+	}
+}	
+  catch (Throwable ex) {
+    log.error(&quot;Error in Beanshell&quot;, ex);
+ 	
+ }
+
+
+
+
+</stringProp>
+                <stringProp name="TestPlan.comments">The auth token in the authorisation is getting extracted </stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+          <collectionProp name="CookieManager.cookies"/>
+          <stringProp name="TestPlan.comments">Manages the Cookie</stringProp>
+          <boolProp name="CookieManager.clearEachIteration">true</boolProp>
+        </CookieManager>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>false</message>
+              <threadName>true</threadName>
+              <dataType>false</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>false</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <hostname>true</hostname>
+              <threadCounts>true</threadCounts>
+              <sampleCount>true</sampleCount>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager" enabled="true">
+          <boolProp name="clearEachIteration">false</boolProp>
+          <boolProp name="useExpires">false</boolProp>
+        </CacheManager>
+        <hashTree/>
+        <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>false</message>
+              <threadName>true</threadName>
+              <dataType>false</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>false</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <hostname>true</hostname>
+              <threadCounts>true</threadCounts>
+              <sampleCount>true</sampleCount>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <boolProp name="ResultCollector.success_only_logging">true</boolProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

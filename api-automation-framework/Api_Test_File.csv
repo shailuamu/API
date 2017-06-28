@@ -1,0 +1,2 @@
+Apidescription,Api,Method,ServerName,Protocol,PortNumber,ContentEncoding,Parameters,Bodydata,DBQuery,Resultparameters,AssertionVar,Headerparmeter,RegExVarName,RegEx,ExpectedStatusCode
+Get all shipwrecks,/api/v1/shipwrecks,GET,13.229.31.126,http,9999,utf-8,,,,,,,,,200
