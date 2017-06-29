@@ -95,4 +95,21 @@ Add pettypes,/petclinic/api/pettypes,POST,13.229.31.126,http,8080,utf-8,,"{
   ""id"": 10,
   ""name"": ""BAT""
 }",,,,Content-Type#application/json,,,201
-Delete Pettype by pet ID,/petclinic/api/pettypes/1,DELETE,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Delete Pettype by petID,/petclinic/api/pettypes/1,DELETE,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Get pettypes by ID,/petclinic/api/pettypes/${delete_pettype_id},GET,13.229.31.126,http,8080,utf-8,,,,,,,,,200
+Edit pettypes by ID,/petclinic/api/pettypes/${delete_pettype_id},PUT,13.229.31.126,http,8080,utf-8,,"{
+  ""id"":""${delete_pettype_id}"",
+  ""name"": ""DOG-edited""
+}",,,,Content-Type#application/json,,,200
+Get API speciality,/petclinic/api/specialties,GET,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Add speciality,/petclinic/api/specialties,POST,13.229.31.126,http,8080,utf-8,,"{
+  ""id"": 5,
+  ""name"": ""test""
+}",,,,Content-Type#application/json,sp_id,"""id"":(.+?)\,",201
+Get speciality,/petclinic/api/specialties/${sp_id},GET,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Edit speciality,/petclinic/api/specialties/${sp_id},PUT,13.229.31.126,http,8080,utf-8,,"{
+  ""id"": ""${sp_id}"",
+  ""name"": ""edited""
+}",,,,Content-Type#application/json,,,204
+Get vets,/petclinic/api/vets,GET,13.229.31.126,http,8080,utf-8,,,,,,,,,200
+Add vets,/petclinic/api/vets,POST,13.229.31.126,http,8080,utf-8,,"{""id"":7,""firstName"":""chints"",""lastName"":""api"",""specialties"":[]}",,,,Content-Type#application/json,,,201
