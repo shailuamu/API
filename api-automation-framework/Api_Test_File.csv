@@ -1,24 +1,31 @@
 Apidescription,Api,Method,ServerName,Protocol,PortNumber,ContentEncoding,Parameters,Bodydata,DBQuery,Resultparameters,AssertionVar,Headerparmeter,RegExVarName,RegEx,ExpectedStatusCode
-Get all shipwrecks,/api/v1/shipwrecks,GET,13.229.31.126,http,9999,utf-8,,,,,,,,,200
-Add shipwreks,/api/v1/shipwrecks,POST,13.229.31.126,http,9999,utf-8,,"         {
-  ""name"":""api_test"",
-  ""description"":""api_test_desc"",
-  ""condition"":""worst"",
-  ""depth"":""4"",
-  ""latitude"":""4"",
-  ""longitude"":""34"",
-  ""yearDiscovered"":""2007""
-  }
-",,,,Content-Type#application/json,id,"""id"":(.+?)\,",200
-Get shipwreaks by Id,/api/v1/shipwrecks/${id},GET,13.229.31.126,http,9999,utf-8,,,,,,,,,200
-Edit shipwreks,/api/v1/shipwrecks/${id},PUT,13.229.31.126,http,9999,utf-8,,"         {
-   ""id"":""${id}"",    ""name"":""api_test_edited"",
-  ""description"":""api_test_desc"",
-  ""condition"":""worst"",
-  ""depth"":""4"",
-  ""latitude"":""4"",
-  ""longitude"":""34"",
-  ""yearDiscovered"":""2007""
-  }
-",,,"""name"":""api_test_edited""",Content-Type#application/json,,,300
-Delete shipwreks,/api/v1/shipwrecks/${id},DELETE,13.229.31.126,http,9999,utf-8,,,,,,,,,200
+Get owners,/petclinic/api/owners,GET,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Add Owners,/petclinic/api/owners,POST,13.229.31.126,http,8080,utf-8,,"{
+  ""address"": ""bavdhan"",
+  ""city"": ""pune"",
+  ""firstName"": ""chintamani"",
+  ""id"": 2,
+  ""lastName"": ""manjare"",
+  ""pets"": [
+    {
+      ""birthDate"": ""2017-06-29T05:34:57.861Z"",
+      ""id"": 0,
+      ""name"": ""tomy"",
+      ""owner"": {},
+      ""type"": {
+        ""id"": 0,
+        ""name"": ""string""
+      },
+      ""visits"": [
+        {
+          ""date"": ""yyyy/MM/dd"",
+          ""description"": ""string"",
+          ""id"": 0,
+          ""pet"": {}
+        }
+      ]
+    }
+  ],
+  ""telephone"": ""490787""
+}",,,,Content-Type#application/json,id,"""id"":(.+?)\,",201
+Get owners by id,/petclinic/api/owners/${id},GET,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
