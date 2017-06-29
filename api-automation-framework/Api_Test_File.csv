@@ -111,5 +111,8 @@ Edit speciality,/petclinic/api/specialties/${sp_id},PUT,13.229.31.126,http,8080,
   ""id"": ""${sp_id}"",
   ""name"": ""edited""
 }",,,,Content-Type#application/json,,,204
-Get vets,/petclinic/api/vets,GET,13.229.31.126,http,8080,utf-8,,,,,,,,,200
+Get vets,/petclinic/api/vets,GET,13.229.31.126,http,8080,utf-8,,,,,,,vet_id,"""id"":(.+?)\,",200
 Add vets,/petclinic/api/vets,POST,13.229.31.126,http,8080,utf-8,,"{""id"":7,""firstName"":""chints"",""lastName"":""api"",""specialties"":[]}",,,,Content-Type#application/json,,,201
+Get vets by vetID,/petclinic/api/vets/${vet_id},GET,13.229.31.126,http,8080,utf-8,,,,,,,,,200
+Edit vets,/petclinic/api/vets/${vet_id},PUT,13.229.31.126,http,8080,utf-8,,"{""id"":""${vet_id}"",""firstName"":""chints_edited"",""lastName"":""api"",""specialties"":[]}",,,,Content-Type#application/json,,,204
+Get visits,/petclinic/api/visits,GET,13.229.31.126,http,8080,utf-8,,,,,,,,,200
