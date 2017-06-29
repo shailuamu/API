@@ -4,7 +4,7 @@ Add Owners,/petclinic/api/owners,POST,13.229.31.126,http,8080,utf-8,,"{
   ""address"": ""bavdhan"",
   ""city"": ""pune"",
   ""firstName"": ""chintamani"",
-  ""id"": 2,
+  ""id"": 17,
   ""lastName"": ""manjare"",
   ""pets"": [
     {
@@ -29,3 +29,70 @@ Add Owners,/petclinic/api/owners,POST,13.229.31.126,http,8080,utf-8,,"{
   ""telephone"": ""490787""
 }",,,,Content-Type#application/json,id,"""id"":(.+?)\,",201
 Get owners by id,/petclinic/api/owners/${id},GET,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Get owners by last name,/petclinic/api/owners/*/lastname/manjare,GET,13.229.31.126,http,8080,utf-8,,,,,"""lastName"":""manjare""",Content-Type#application/json,id_delete,"""id"":(.+?)\,",200
+Edit owner,/petclinic/api/owners/${id},PUT,13.229.31.126,http,8080,utf-8,,"{
+  ""address"": ""bavdhan"",
+  ""city"": ""pune"",
+  ""firstName"": ""chintamani_edited"",
+  ""id"": 2,
+  ""lastName"": ""manjare"",
+  ""pets"": [
+    {
+      ""birthDate"": ""2017-06-29T05:34:57.861Z"",
+      ""id"": 0,
+      ""name"": ""tomy"",
+      ""owner"": {},
+      ""type"": {
+        ""id"": 0,
+        ""name"": ""string""
+      },
+      ""visits"": [
+        {
+          ""date"": ""yyyy/MM/dd"",
+          ""description"": ""string"",
+          ""id"": 0,
+          ""pet"": {}
+        }
+      ]
+    }
+  ],
+  ""telephone"": ""490787""
+}",,,"""firstName"":""chintamani_edited""",Content-Type#application/json,,,200
+Get pets,/petclinic/api/pets,GET,13.229.31.126,http,8080,utf-8,,,,,,,,,200
+Add pets,/petclinic/api/pets,POST,13.229.31.126,http,8080,utf-8,,"{
+  ""birthDate"": ""2017/06/01"",
+  ""id"": 1,
+  ""name"": ""tomy"",
+  ""owner"": {
+    ""address"": ""bavdhan"",
+    ""city"": ""pune"",
+    ""firstName"": ""chintamani"",
+    ""id"": 17,
+    ""lastName"": ""manjare"",
+    ""pets"": [
+      { ""id"":2, ""name"":""dog""}
+    ],
+    ""telephone"": ""string""
+  },
+  ""type"": {
+    ""id"": 1,
+    ""name"": ""German shefard""
+  },
+  ""visits"": [
+    {
+      ""date"": ""2017/13/11"",
+      ""description"": ""string"",
+      ""id"":1,
+      ""pet"": {}
+    }
+  ]
+}",,,"""name"":""tomy""",Content-Type#application/json,,,201
+Get pettypes,/petclinic/api/pets/pettypes,GET,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Get Pets by pet ID,/petclinic/api/pets/3,GET,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Delete Pets by petID,/petclinic/api/pets/1,DELETE,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Get pettypes,/petclinic/api/pettypes,GET,13.229.31.126,http,8080,utf-8,,,,,,,delete_pettype_id,"""id"":(.+?)\,",200
+Add pettypes,/petclinic/api/pettypes,POST,13.229.31.126,http,8080,utf-8,,"{
+  ""id"": 10,
+  ""name"": ""BAT""
+}",,,,Content-Type#application/json,,,201
+Delete Pettype by petID,/petclinic/api/pettypes/1,DELETE,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
