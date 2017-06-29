@@ -95,4 +95,4 @@ Add pettypes,/petclinic/api/pettypes,POST,13.229.31.126,http,8080,utf-8,,"{
   ""id"": 10,
   ""name"": ""BAT""
 }",,,,Content-Type#application/json,,,201
-Delete Pettype by petID,/petclinic/api/pettypes/1,DELETE,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
+Delete Pettype by pet ID,/petclinic/api/pettypes/1,DELETE,13.229.31.126,http,8080,utf-8,,,,,,Content-Type#application/json,,,200
